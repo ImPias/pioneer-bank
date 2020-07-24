@@ -10,6 +10,97 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 class="text-center">Wellcome To Pioneer Bank</h1>
+    <div id="login-area">
+        <h1 class="text-center">Wellcome To Pioneer Bank</h1>
+        <div class="submit-area">
+            <h4>Login</h4>
+            <input type="text" class="form-control" placeholder="Email">
+            <br>
+            <input type="password" class="form-control" placeholder="Password">
+            <br>
+            <button id="login" class="btn btn-success">Enter</button>
+        </div>
+    </div>
+    <div id="transection-area">
+        <h1 class="text-center">Transection Area</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="deposite status">
+                    <h5>Deposite</h5>
+                    <h2>$ <span id="currentDeposite">00</span></h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="withdraw status">
+                    <h5>Withdraw</h5>
+                    <h2>$ <span id="currentWithdraw">00</span></h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="balance status">
+                    <h5>Balance</h5>
+                    <h2>$ <span id="currentBalance">1240</span></h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="submit-area">
+                    <h4>Deposite</h4>
+                    <input type="text" id="depositeAmount" class="form-control" placeholder="$ Amount you want to deposite.">
+                    <br>
+                    <button id="addDeposite" class="btn btn-success">Deposite</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="submit-area">
+                    <h4>Withdraw</h4>
+                    <input type="text" id="withdrawAmount" class="form-control" placeholder="$ Amount you want to withdraw.">
+                    <br>
+                    <button id="addWithdraw" class="btn btn-success">Withdraw</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Login Button Event Handler
+        const btnLogin = document.getElementById('login');
+        btnLogin.addEventListener('click', function(){
+            const loginArea = document.getElementById('login-area');
+            loginArea.style.display = 'none';
+            const transectionArea = document.getElementById('transection-area');
+            transectionArea.style.display = 'block';
+        })
+        // Update Span Text
+        function updateSpanText(id, addedAmount){
+            const currentText = document.getElementById(id).innerText;
+            const currentNumber = parseFloat(currentText);
+            const newText = currentNumber + addedAmount;
+            document.getElementById(id).innerText = newText;
+        }
+        // Get Input Number
+        function getInputNumber(id){
+            const amount = document.getElementById(id).value;
+            const amountNumber = parseFloat(amount);
+            document.getElementById(id).value = "";
+            return amountNumber;
+        }
+        // Deposite Button Event Handler
+        const addDeposite = document.getElementById('addDeposite');
+        addDeposite.addEventListener('click', function(){
+            const depositeNumber = getInputNumber("depositeAmount");
+
+            updateSpanText("currentDeposite", depositeNumber);
+            updateSpanText("currentBalance", depositeNumber);
+        })
+        // Withdraw Button Event Handler
+        const addWithdraw = document.getElementById('addWithdraw');
+        addWithdraw.addEventListener('click', function(){
+            const withdrawNumber = getInputNumber("withdrawAmount");
+
+            updateSpanText("currentWithdraw", withdrawNumber);
+            updateSpanText("currentBalance", -1 * withdrawNumber)
+        })
+    </script>
 </body>
 </html>
