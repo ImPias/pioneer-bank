@@ -28,13 +28,13 @@
             <div class="col-md-4">
                 <div class="deposite status">
                     <h5>Deposite</h5>
-                    <h2>$ <span id="currentDeposite">00</span></h2>
+                    <h2>$ <span id="currentDeposite">0</span></h2>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="withdraw status">
                     <h5>Withdraw</h5>
-                    <h2>$ <span id="currentWithdraw">00</span></h2>
+                    <h2>$ <span id="currentWithdraw">0</span></h2>
                 </div>
             </div>
             <div class="col-md-4">
@@ -82,31 +82,32 @@
         // Get Input Number
         function getInputNumber(id){
             const amount = document.getElementById(id).value;
-            const amountNumber = parseFloat(amount);
-            document.getElementById(id).value = "";
-            return amountNumber;
+            if(amount < 0){
+                alert("Value cannot be negetive.");
+                document.getElementById(id).value = "";
+                return 0;
+            }else if(amount == ""){
+                alert("Field must not be empty.");
+                return 0;
+            }else{
+                const amountNumber = parseFloat(amount);
+                document.getElementById(id).value = "";
+                return amountNumber;
+            }
         }
         // Deposite Button Event Handler
         const addDeposite = document.getElementById('addDeposite');
         addDeposite.addEventListener('click', function(){
             const depositeNumber = getInputNumber("depositeAmount");
-            if(depositeNumber < 0){
-                alert("Deposite number cannot be negetive.");
-            }else{
-                updateSpanText("currentDeposite", depositeNumber);
-                updateSpanText("currentBalance", depositeNumber);
-            }
+            updateSpanText("currentDeposite", depositeNumber);
+            updateSpanText("currentBalance", depositeNumber);
         })
         // Withdraw Button Event Handler
         const addWithdraw = document.getElementById('addWithdraw');
         addWithdraw.addEventListener('click', function(){
             const withdrawNumber = getInputNumber("withdrawAmount");
-            if(withdrawNumber < 0){
-                alert("Withdraw number cannot be negetive.");
-            }else{
-                updateSpanText("currentWithdraw", withdrawNumber);
-                updateSpanText("currentBalance", -1 * withdrawNumber)
-            }
+            updateSpanText("currentWithdraw", withdrawNumber);
+            updateSpanText("currentBalance", -1 * withdrawNumber)
         })
     </script>
 </body>
